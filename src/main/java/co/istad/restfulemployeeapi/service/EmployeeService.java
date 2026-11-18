@@ -1,8 +1,8 @@
 package co.istad.restfulemployeeapi.service;
 
-import co.istad.restfulemployeeapi.dto.CreateEmployeeRequest;
-import co.istad.restfulemployeeapi.dto.EmployeeResponse;
-import co.istad.restfulemployeeapi.dto.UpdateEmployeeRequest;
+import co.istad.restfulemployeeapi.dto.employee.CreateEmployeeRequest;
+import co.istad.restfulemployeeapi.dto.employee.EmployeeResponse;
+import co.istad.restfulemployeeapi.dto.employee.UpdateEmployeeRequest;
 
 import java.util.List;
 

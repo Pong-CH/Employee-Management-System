@@ -1,4 +1,4 @@
-package co.istad.restfulemployeeapi.dto;
+package co.istad.restfulemployeeapi.dto.employee;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

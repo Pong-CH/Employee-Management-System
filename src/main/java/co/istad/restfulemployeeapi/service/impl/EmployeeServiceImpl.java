@@ -1,13 +1,14 @@
 package co.istad.restfulemployeeapi.service.impl;
 
+import co.istad.restfulemployeeapi.domain.Department;
 import co.istad.restfulemployeeapi.domain.Employee;
-import co.istad.restfulemployeeapi.dto.CreateEmployeeRequest;
-import co.istad.restfulemployeeapi.dto.EmployeeResponse;
-import co.istad.restfulemployeeapi.dto.UpdateEmployeeRequest;
+import co.istad.restfulemployeeapi.dto.employee.CreateEmployeeRequest;
+import co.istad.restfulemployeeapi.dto.employee.EmployeeResponse;
+import co.istad.restfulemployeeapi.dto.employee.UpdateEmployeeRequest;
 import co.istad.restfulemployeeapi.mapper.EmployeeMapper;
+import co.istad.restfulemployeeapi.repository.DepartmentRepository;
 import co.istad.restfulemployeeapi.repository.EmployeeRepository;
 import co.istad.restfulemployeeapi.service.EmployeeService;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
     private final EmployeeMapper employeeMapper;
+
+    private final DepartmentRepository departmentRepository;
 
 
     @Override
@@ -46,6 +49,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeResponse createEmployee(CreateEmployeeRequest employeeRequest) {
 
+        Department existDepartment = departmentRepository
+                .findById(employeeRequest.departmentId())
+                .orElseThrow(
+                        () -> new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Department has not been found"
+                        )
+                );
+
         if (employeeRepository.existsByEmail(employeeRequest.email())) {
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT,
@@ -55,6 +67,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         Employee emp = employeeMapper.fromCreateEmployeeRequest(employeeRequest);
         emp.setIsActive(Boolean.TRUE);
+        emp.setDepartment(existDepartment);
 
         employeeRepository.save(emp);
 

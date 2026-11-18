@@ -16,6 +16,8 @@ import java.util.List;
 @Slf4j
 public class CustomExceptionHandling {
 
+
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse<?> handleApiValidation(MethodArgumentNotValidException e) {

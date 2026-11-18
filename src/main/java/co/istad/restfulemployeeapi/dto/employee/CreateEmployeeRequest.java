@@ -1,4 +1,4 @@
-package co.istad.restfulemployeeapi.dto;
+package co.istad.restfulemployeeapi.dto.employee;
 
 import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -21,7 +21,10 @@ public record CreateEmployeeRequest(
 
 
         @DateTimeFormat(pattern = "yyyy-MM-dd")
-        LocalDate hireDate
+        LocalDate hireDate,
+
+        @NotBlank(message = "Department id is required")
+        String departmentId
 
 ) {
 }
