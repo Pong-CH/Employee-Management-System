@@ -4,6 +4,8 @@ import co.istad.restfulemployeeapi.domain.Employee;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import org.springframework.cglib.core.Local;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -38,4 +40,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, String> {
 
     List<Employee> id(String id);
 
+    Page<Employee> findAllByIsActiveTrue(Pageable pageable);
+
+    List<Employee> findByNameContainingIgnoreCaseOrEmailContainingIgnoreCase(String name, String email);
+
+    Page<Employee> findByDepartment_Id(String department, Pageable pageable);
 }

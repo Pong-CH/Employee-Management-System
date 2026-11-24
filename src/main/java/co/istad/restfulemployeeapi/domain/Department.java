@@ -22,7 +22,7 @@ public class Department {
 
     private Boolean isActive;
 
-    @OneToMany(mappedBy = "department")
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
     private List<Employee> employees;
 
 }

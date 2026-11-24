@@ -3,7 +3,7 @@ spring:
     name: employee-api
 
   datasource:
-    url: jdbc:postgresql://localhost:5444/emp_db
+    url: jdbc:postgresql://localhost:5445/emp_db
     username: emp_user
     password: emp_pass
 

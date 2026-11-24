@@ -3,12 +3,15 @@ package co.istad.restfulemployeeapi.service.impl;
 import co.istad.restfulemployeeapi.domain.Department;
 import co.istad.restfulemployeeapi.dto.department.CreateDepartmentRequest;
 import co.istad.restfulemployeeapi.dto.department.DepartmentResponse;
+import co.istad.restfulemployeeapi.dto.department.DepartmentStatisticsResponse;
 import co.istad.restfulemployeeapi.mapper.DepartmentMapper;
 import co.istad.restfulemployeeapi.repository.DepartmentRepository;
 import co.istad.restfulemployeeapi.service.DepartmentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -36,6 +39,43 @@ public class DepartmentServiceImpl implements DepartmentService {
         departmentRepository.save(department);
 
         return departmentMapper.toResponse(department);
+    }
+
+    @Override
+    public void updateStatusById(String id, Boolean isActive) {
+
+
+        Department department = departmentRepository.findById(id)
+                .orElseThrow(
+                        () -> new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Department has not been found"
+                        )
+                );
+        department.setIsActive(Boolean.FALSE);
+        department.getEmployees()
+                        .forEach(
+                                emp -> emp.setIsActive(Boolean.FALSE)
+                        );
+        departmentRepository.save(department);
+
+    }
+
+    @Override
+    public DepartmentStatisticsResponse getDepartmentStatistics(
+            String departmentId
+    ) {
+
+        if (!departmentRepository.existsById(departmentId)) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Department has not been found"
+            );
+        }
+
+        return departmentRepository.getDepartmentStatistics(
+                departmentId
+        );
     }
 
 
