@@ -50,7 +50,7 @@ public class DepartmentController {
 
            @RequestParam(defaultValue = "10") int size,
 
-           @RequestParam(defaultValue = "name") String sotBy,
+           @RequestParam(defaultValue = "name") String sortBy,
 
            @RequestParam(defaultValue = "asc") String direction
    ) {
@@ -58,7 +58,7 @@ public class DepartmentController {
                 departmentId,
                 page,
                 size,
-                sotBy,
+                sortBy,
                 direction
         );
    }

@@ -265,7 +265,12 @@ public class EmployeeServiceImpl implements EmployeeService {
                                 "Destination department is inactive"
                         )
                 );
-
+        if (!Boolean.TRUE.equals(department.getIsActive())) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Destination department is inactive"
+            );
+        }
         employee.setDepartment(department);
 
         employeeRepository.save(employee);
